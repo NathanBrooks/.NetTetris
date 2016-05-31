@@ -5,8 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tetris"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="681.699" Width="419.771">
     <Grid>
+        <Canvas HorizontalAlignment="Left" Height="540" Margin="44,67,0,0" VerticalAlignment="Top" Width="300" Background="Black">
+            <Line X1="30" Y1="0" X2="30" Y2="540" Stroke="#4CD3D3D3" />
+            <Line X1="60" Y1="0" X2="60" Y2="540" Stroke="#4CD3D3D3" />
+            <Line X1="90" Y1="0" X2="90" Y2="540" Stroke="#4CD3D3D3" />
+            <Line X1="120" Y1="0" X2="120" Y2="540" Stroke="#4CD3D3D3" />
+            <Line X1="150" Y1="0" X2="150" Y2="540" Stroke="#4CD3D3D3" />
+            <Line X1="180" Y1="0" X2="180" Y2="540" Stroke="#4CD3D3D3" />
+            <Line X1="210" Y1="0" X2="210" Y2="540" Stroke="#4CD3D3D3" />
+            <Line X1="240" Y1="0" X2="240" Y2="540" Stroke="#4CD3D3D3" />
+            <Line X1="270" Y1="0" X2="270" Y2="540" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="30" X2="300" Y2="30" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="60" X2="300" Y2="60" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="90" X2="300" Y2="90" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="120" X2="300" Y2="120" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="150" X2="300" Y2="150" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="180" X2="300" Y2="180" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="210" X2="300" Y2="210" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="240" X2="300" Y2="240" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="270" X2="300" Y2="270" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="300" X2="300" Y2="300" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="330" X2="300" Y2="330" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="360" X2="300" Y2="360" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="390" X2="300" Y2="390" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="420" X2="300" Y2="420" Stroke="#4CD3D3D3" /><!--HAHA 420 BLAZE IT-->
+            <Line X1="0" Y1="450" X2="300" Y2="450" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="480" X2="300" Y2="480" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="510" X2="300" Y2="510" Stroke="#4CD3D3D3" />
+            <Line X1="0" Y1="540" X2="300" Y2="540" Stroke="#4CD3D3D3" />
+            
+            
+        </Canvas>
         
+
     </Grid>
 </Window>
