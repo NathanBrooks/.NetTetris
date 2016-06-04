@@ -23,6 +23,31 @@ namespace Tetris
         public MainWindow()
         {
             InitializeComponent();
+            this.KeyDown += MainWindow_KeyDown;
+        }
+
+        private void MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Left)
+            {
+
+            }
+            if(e.Key == Key.Right)
+            {
+
+            }
+            if(e.Key == Key.Up)
+            {
+
+            }
+            if(e.Key == Key.Down)
+            {
+
+            }
+            if(e.Key == Key.Space)
+            {
+
+            }
         }
     }
 }
