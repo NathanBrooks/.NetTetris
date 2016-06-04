@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="681.699" Width="419.771">
     <Grid>
-        <Canvas HorizontalAlignment="Left" Height="540" Margin="44,67,0,0" VerticalAlignment="Top" Width="300" Background="Black">
+        <Canvas Name="GameCanvas" HorizontalAlignment="Left" Height="540" Margin="44,67,0,0" VerticalAlignment="Top" Width="300" Background="Black">
             <Line X1="30" Y1="0" X2="30" Y2="540" Stroke="#4CD3D3D3" />
             <Line X1="60" Y1="0" X2="60" Y2="540" Stroke="#4CD3D3D3" />
             <Line X1="90" Y1="0" X2="90" Y2="540" Stroke="#4CD3D3D3" />

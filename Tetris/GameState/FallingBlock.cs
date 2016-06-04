@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Shapes;
 namespace Tetris.GameState
 {
@@ -33,8 +34,8 @@ namespace Tetris.GameState
             { {0,2,0,1}, {0,1,2,0}, {0,2,0,1}, {0,1,2,0} },
         };
 
-        private static int BlockHeight = 10;
-        private static int BlockWidth = 10;
+        private static int BlockHeight = 30;
+        private static int BlockWidth = 30;
 
         // TODO: static array of colors
 
@@ -54,6 +55,7 @@ namespace Tetris.GameState
             this.GameCanvas = gameCanvas;
             this.offset[0] = xOffset;
             this.offset[1] = 0;
+            reDraw();
 
         }
 
@@ -89,7 +91,7 @@ namespace Tetris.GameState
         {
             if (isValid(Orientation, this.offset[0] - 1, this.offset[1]))
             {
-                this.offset[0] -= 1;
+                this.offset[0]--;
                 reDraw();
             }
         }
@@ -98,7 +100,7 @@ namespace Tetris.GameState
         {
             if (isValid(Orientation, this.offset[0] + 1, this.offset[1]))
             {
-                this.offset[0] += 1;
+                this.offset[0]++;
                 reDraw();
             }
         }
@@ -107,15 +109,29 @@ namespace Tetris.GameState
         {
             if (isValid(Orientation, this.offset[0], this.offset[1] + 1))
             {
-                this.offset[1] += 1;
+                this.offset[1]++;
                 reDraw();
             }
         }
 
         private bool isValid(int orientation, int offsetX, int offsetY)
         {
-            // TODO: actually check validity
+            if (
+                (offsetY + Math.Abs((ShapeOffsets[Type, orientation, 0] - (4 - ShapeOffsets[Type, orientation, 1]))) >= GameBoard.SizeY) ||
+                (offsetX + Math.Abs((ShapeOffsets[Type, orientation, 2] - (4 - ShapeOffsets[Type, orientation, 3]))) >= GameBoard.SizeX) ||
+                (offsetY < 0) ||
+                (offsetX < 0)
+                ) return false;
+
+            for (int y=ShapeOffsets[Type, orientation, 0]; y<(4 - ShapeOffsets[Type, orientation, 1]); y++)
+            {
+                for(int x=ShapeOffsets[Type, orientation, 2]; x<(4 - ShapeOffsets[Type, orientation, 3]); x++)
+                {
+                    if (ShapePositions[Type, orientation, y, x] == 1 && Game[offsetY + y, offsetX + x] != 0) return false;
+                }
+            }
             return true;
+
         }
 
         public void reDraw()
@@ -133,8 +149,9 @@ namespace Tetris.GameState
                     if (ShapePositions[Type, Orientation, x, y] == 1)
                     {
                         Rectangle rect = new Rectangle() { Height = BlockHeight, Width = BlockWidth };
-                        Canvas.SetTop(rect, y + offset[1]);
-                        Canvas.SetLeft(rect, x + offset[0]);
+                        Canvas.SetTop(rect, (BlockHeight * y) + (offset[1] * BlockHeight));
+                        Canvas.SetLeft(rect, (BlockWidth * x) + (offset[0] * BlockWidth));
+                        rect.Fill = Brushes.Aqua;
 
                         Rectangles.Add(rect);
                         GameCanvas.Children.Add(rect);

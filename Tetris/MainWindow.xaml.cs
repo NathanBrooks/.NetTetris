@@ -20,29 +20,34 @@ namespace Tetris
     /// </summary>
     public partial class MainWindow : Window
     {
+        private GameState.GameBoard board;
+        private GameState.FallingBlock block;
+
         public MainWindow()
         {
             InitializeComponent();
             this.KeyDown += MainWindow_KeyDown;
+            board = new GameState.GameBoard();
+            block = new GameState.FallingBlock(0,0,0, ref board, ref GameCanvas);
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Left)
             {
-
+                block.moveLeft();
             }
             if(e.Key == Key.Right)
             {
-
+                block.moveRight();
             }
             if(e.Key == Key.Up)
             {
-
+                block.rotatePositive();
             }
             if(e.Key == Key.Down)
             {
-
+                block.moveDown();
             }
             if(e.Key == Key.Space)
             {
