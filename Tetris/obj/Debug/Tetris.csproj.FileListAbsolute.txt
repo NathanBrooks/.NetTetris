@@ -13,3 +13,17 @@ C:\Users\Vlad\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris.Properties
 C:\Users\Vlad\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris.csproj.GenerateResource.Cache
 C:\Users\Vlad\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris.exe
 C:\Users\Vlad\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris.pdb
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\bin\Debug\Tetris.exe.config
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\bin\Debug\Tetris.exe
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\bin\Debug\Tetris.pdb
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris.csprojResolveAssemblyReference.cache
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\MainWindow.g.cs
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\App.g.cs
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris_MarkupCompile.cache
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris_MarkupCompile.lref
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\MainWindow.baml
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris.g.resources
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris.Properties.Resources.resources
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris.csproj.GenerateResource.Cache
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris.exe
+C:\Users\Trulylegit\Documents\Projects\dotNetTetris\Tetris\obj\Debug\Tetris.pdb

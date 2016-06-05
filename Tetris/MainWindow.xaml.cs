@@ -67,6 +67,8 @@ namespace Tetris
 
         private void save_btn_Click(object sender, RoutedEventArgs e)
         {
+            
+
             /*IFormatter Save = new BinaryFormatter();
             Stream Write = new FileStream("savefile.tet", FileMode.Create, FileAccess.Write);
             Save.Serialize(Write, save1);
@@ -75,6 +77,8 @@ namespace Tetris
 
         private void load_btn_Click(object sender, RoutedEventArgs e)
         {
+            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+            dialog.ShowDialog();
             /*IFormatter Load = new BinaryFormatter();
             Stream Read = new FileStream("savefile.tet", FileMode.Open, FileAccess.Read);
             save1 = (SaveState) Load.Deserialize(Read);
