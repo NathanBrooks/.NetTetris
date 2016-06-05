@@ -32,7 +32,7 @@ namespace Tetris.GameState
         private FallingBlock CurrentFallingBlock;
         private GameBoard Board;
 
-        public TetrisGameManager(ref Canvas gameCanvas)
+        public TetrisGameManager(int Scr, int Lvl, ref Canvas gameCanvas)
         {
             this.Score = Scr;
             this.Level = Lvl;
@@ -43,6 +43,44 @@ namespace Tetris.GameState
             SetNewBlock();
         }
 
+        private Boolean SetNewBlock()
+        {
+            Random rnd = new Random();
+            return CurrentFallingBlock.newBlock(rnd.Next(0, 7), rnd.Next(0, 4), rnd.Next(4, 7));
+        }
+
+        public void moveLeft()
+        {
+            CurrentFallingBlock.moveLeft();
+        }
+
+        public void moveRight()
+        {
+            CurrentFallingBlock.moveRight();
+        }
+
+        public void moveDown()
+        {
+            CurrentFallingBlock.moveDown();
+        }
+
+        public void rotate()
+        {
+            CurrentFallingBlock.rotatePositive();
+        }
+
+        public Boolean Tick()
+        {
+            if (!CurrentFallingBlock.moveDown())
+            {
+                if (!SetNewBlock())
+                    return false;
+            }
+
+            // DO SOME SCORING HERE
+            int RowsCleared = Board.clearRows();
+            return true;
+        }
 
     }
 }

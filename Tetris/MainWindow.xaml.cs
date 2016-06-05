@@ -34,6 +34,7 @@ namespace Tetris
         public MainWindow()
         {
             InitializeComponent();
+            game = new TetrisGameManager(0, 0, ref GameCanvas);
             this.KeyDown += MainWindow_KeyDown;
             this.Timer.Tick += Timer_Tick;
             this.Timer.Interval = new TimeSpan(0, 0, 0, 500);
