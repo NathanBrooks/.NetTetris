@@ -13,7 +13,7 @@ namespace Tetris.GameState
     {
         private static int[,,,] ShapePositions = new int[7, 4, 4, 4]
         {
-        {{{0,1,0,0},{0,1,0,0},{0,1,0,0},{0,1,0,0}},{{1,1,1,1},{0,0,0,0},{0,0,0,0},{0,0,0,0}},{{0,0,0,1},{0,0,0,1},{0,0,0,1},{0,0,0,1}},{{0,0,0,0},{1,1,1,1},{0,0,0,0},{0,0,0,0}}}, // line
+        {{{1,0,0,0},{1,0,0,0},{1,0,0,0},{1,0,0,0}},{{1,1,1,1},{0,0,0,0},{0,0,0,0},{0,0,0,0}},{{0,0,0,1},{0,0,0,1},{0,0,0,1},{0,0,0,1}},{{0,0,0,0},{1,1,1,1},{0,0,0,0},{0,0,0,0}}}, // line
         {{{0,0,0,1},{0,1,1,1},{0,0,0,0},{0,0,0,0}},{{1,0,0,0},{1,0,0,0},{1,1,0,0},{0,0,0,0}},{{1,1,1,0},{1,0,0,0},{0,0,0,0},{0,0,0,0}},{{0,0,1,1},{0,0,0,1},{0,0,0,1},{0,0,0,0}}}, // Reverse L
         {{{1,0,0,0},{1,1,1,0},{0,0,0,0},{0,0,0,0}},{{1,1,0,0},{1,0,0,0},{1,0,0,0},{0,0,0,0}},{{0,1,1,1},{0,0,0,1},{0,0,0,0},{0,0,0,0}},{{0,0,0,1},{0,0,0,1},{0,0,1,1},{0,0,0,0}}}, // Foward L
         {{{0,1,1,0},{1,1,0,0},{0,0,0,0},{0,0,0,0}},{{1,0,0,0},{1,1,0,0},{0,1,0,0},{0,0,0,0}},{{0,1,1,0},{1,1,0,0},{0,0,0,0},{0,0,0,0}},{{1,0,0,0},{1,1,0,0},{0,1,0,0},{0,0,0,0}}}, // Squigly
@@ -25,7 +25,7 @@ namespace Tetris.GameState
         // top, bottom, left, right
         private static int[,,] ShapeOffsets = new int[7, 4, 4]
         {
-            { {0,0,1,2}, {0,3,0,0}, {0,0,3,0}, {1,2,0,0} },
+            { {0,0,0,3}, {0,3,0,0}, {0,0,3,0}, {1,2,0,0} },
             { {0,2,1,0}, {0,1,0,2}, {0,2,0,1}, {0,1,2,0} },
             { {0,2,0,1}, {0,1,0,2}, {0,2,1,0}, {0,1,2,0} },
             { {0,2,0,1}, {0,1,0,2}, {0,2,0,1}, {0,1,0,2} },
@@ -64,22 +64,13 @@ namespace Tetris.GameState
             for(int i=1; i<4; i++)
             {
                 int newOrientation = (Orientation + 1) % 4;
-                if (isValid(newOrientation, this.offset[0], this.offset[1]))
-                {
-                    Orientation = newOrientation;
-                    break;
-                }
-            }
-            reDraw();
-        }
+                int newOffsetX = offset[0] + (ShapeOffsets[Type, newOrientation, 2] - ShapeOffsets[Type, Orientation, 2]);
+                int newOffsetY = offset[1] + (ShapeOffsets[Type, newOrientation, 0] - ShapeOffsets[Type, Orientation, 0]);
 
-        public void rotateNegative()
-        {
-            for (int i = 1; i < 4; i++)
-            {
-                int newOrientation = (Orientation - 1) % 4;
-                if (isValid(newOrientation, this.offset[0], this.offset[1]))
+                if (isValid(newOrientation, newOffsetX, newOffsetY))
                 {
+                    this.offset[0] = newOffsetX;
+                    this.offset[1] = newOffsetY;
                     Orientation = newOrientation;
                     break;
                 }
@@ -117,8 +108,8 @@ namespace Tetris.GameState
         private bool isValid(int orientation, int offsetX, int offsetY)
         {
             if(offsetX < 0 || offsetY < 0 ||
-                (offsetY + (4 - ShapeOffsets[Type, orientation, 0] + ShapeOffsets[Type, orientation, 1]) > GameBoard.SizeY) ||
-                (offsetX + (4 - ShapeOffsets[Type, orientation, 2] + ShapeOffsets[Type, orientation, 3]) > GameBoard.SizeX))
+                ((offsetY + (4 - (ShapeOffsets[Type, orientation, 0] + ShapeOffsets[Type, orientation, 1]))) > GameBoard.SizeY) ||
+                ((offsetX + (4 - (ShapeOffsets[Type, orientation, 2] + ShapeOffsets[Type, orientation, 3]))) > GameBoard.SizeX))
                 return false;
             return true;
 

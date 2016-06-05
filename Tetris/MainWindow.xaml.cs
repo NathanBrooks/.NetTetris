@@ -28,7 +28,7 @@ namespace Tetris
             InitializeComponent();
             this.KeyDown += MainWindow_KeyDown;
             board = new GameState.GameBoard();
-            block = new GameState.FallingBlock(0,0,0, ref board, ref GameCanvas);
+            block = new GameState.FallingBlock(2,0,0, ref board, ref GameCanvas);
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
