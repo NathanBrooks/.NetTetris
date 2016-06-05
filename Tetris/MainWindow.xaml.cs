@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tetris.GameState;
 
 namespace Tetris
 {
@@ -20,34 +21,35 @@ namespace Tetris
     /// </summary>
     public partial class MainWindow : Window
     {
-        private GameState.GameBoard board;
-        private GameState.FallingBlock block;
+
+        private TetrisGameManager game;
 
         public MainWindow()
         {
             InitializeComponent();
             this.KeyDown += MainWindow_KeyDown;
-            board = new GameState.GameBoard();
-            block = new GameState.FallingBlock(2,0,0, ref board, ref GameCanvas);
+            game = new TetrisGameManager(ref GameCanvas);
         }
+
+        
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Left)
             {
-                block.moveLeft();
+                game.moveLeft();
             }
             if(e.Key == Key.Right)
             {
-                block.moveRight();
+                game.moveRight();
             }
             if(e.Key == Key.Up)
             {
-                block.rotatePositive();
+                game.rotate();
             }
             if(e.Key == Key.Down)
             {
-                block.moveDown();
+                game.Tick();
             }
             if(e.Key == Key.Space)
             {
