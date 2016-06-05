@@ -37,12 +37,13 @@ namespace Tetris
             game = new TetrisGameManager(0, 0, ref GameCanvas);
             this.KeyDown += MainWindow_KeyDown;
             this.Timer.Tick += Timer_Tick;
-            this.Timer.Interval = new TimeSpan(0, 0, 0, 500);
+            this.Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            this.Timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            
+            game.Tick();
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
