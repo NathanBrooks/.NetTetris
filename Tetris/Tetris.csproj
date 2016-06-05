@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="GameState\FallingBlock.cs" />
     <Compile Include="GameState\GameBoard.cs" />
+    <Compile Include="GameState\SaveState.cs" />
     <Compile Include="GameState\TetrisGameManager.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

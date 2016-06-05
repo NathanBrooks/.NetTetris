@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tetris"
         mc:Ignorable="d"
-        Title="MainWindow" Height="681.699" Width="419.771">
+        Title="Tetris" Height="629.18" Width="677.898">
     <Grid>
-        <Canvas HorizontalAlignment="Left" Height="540" Margin="44,67,0,0" VerticalAlignment="Top" Width="300" Background="Black">
+        <Canvas HorizontalAlignment="Left" Height="540" Margin="28,31,0,0" VerticalAlignment="Top" Width="300" Background="Black">
             <Line X1="30" Y1="0" X2="30" Y2="540" Stroke="#4CD3D3D3" />
             <Line X1="60" Y1="0" X2="60" Y2="540" Stroke="#4CD3D3D3" />
             <Line X1="90" Y1="0" X2="90" Y2="540" Stroke="#4CD3D3D3" />
@@ -30,15 +30,22 @@
             <Line X1="0" Y1="330" X2="300" Y2="330" Stroke="#4CD3D3D3" />
             <Line X1="0" Y1="360" X2="300" Y2="360" Stroke="#4CD3D3D3" />
             <Line X1="0" Y1="390" X2="300" Y2="390" Stroke="#4CD3D3D3" />
-            <Line X1="0" Y1="420" X2="300" Y2="420" Stroke="#4CD3D3D3" /><!--HAHA 420 BLAZE IT-->
+            <Line X1="0" Y1="420" X2="300" Y2="420" Stroke="#4CD3D3D3" />
+            <!--HAHA 420 BLAZE IT-->
             <Line X1="0" Y1="450" X2="300" Y2="450" Stroke="#4CD3D3D3" />
             <Line X1="0" Y1="480" X2="300" Y2="480" Stroke="#4CD3D3D3" />
             <Line X1="0" Y1="510" X2="300" Y2="510" Stroke="#4CD3D3D3" />
             <Line X1="0" Y1="540" X2="300" Y2="540" Stroke="#4CD3D3D3" />
-            
-            
+
+
         </Canvas>
-        
+        <Button x:Name="save_btn" Content="Save" HorizontalAlignment="Left" Margin="387,31,0,0" VerticalAlignment="Top" Width="75" Click="save_btn_Click"/>
+        <Button x:Name="load_btn" Content="Load" HorizontalAlignment="Left" Margin="561,31,0,0" VerticalAlignment="Top" Width="75" Click="load_btn_Click"/>
+        <Label x:Name="score_lbl" Content="SCORE" HorizontalAlignment="Left" Margin="441,76,0,0" VerticalAlignment="Top" Width="75" FontSize="21.333"/>
+        <Label x:Name="level_lbl" Content="LEVEL" HorizontalAlignment="Left" Margin="351,76,0,0" VerticalAlignment="Top" Width="64" FontSize="21.333"/>
+        <TextBox x:Name="level_txt" HorizontalAlignment="Left" Height="48" Margin="351,114,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="64" FontSize="32" SelectionOpacity="-17" TextAlignment="Center"/>
+        <TextBox x:Name="score_txt" HorizontalAlignment="Left" Height="32" Margin="441,114,0,0" TextWrapping="Wrap" Text="200000" VerticalAlignment="Top" Width="75" FontSize="21.333" TextAlignment="Center"/>
+
 
     </Grid>
 </Window>

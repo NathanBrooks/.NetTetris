@@ -3,37 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 
 namespace Tetris.GameState
 {
     class TetrisGameManager
     {
-        int Score;
-        int Level;
+        public int Score { get; set; }
+        public int Level { get; set; }
+
         GameBoard Game;
-        DispatcherTimer Timer = new DispatcherTimer();
 
-        public TetrisGameManager()
+        public TetrisGameManager(int Scr, int Lvl)
         {
-            Timer.Tick += Timer_Tick;
-            Timer.Interval = new TimeSpan(0, 0, 0, 500);
+            this.Score = Scr;
+            this.Level = Lvl;
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void StartTimer()
-        {
-
-        }
-
-        public void StopTimer()
-        {
-
-        }
 
     }
 }
