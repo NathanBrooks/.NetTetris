@@ -13,7 +13,7 @@ namespace Tetris.GameState
     {
         private static int[,,,] ShapePositions = new int[7, 4, 4, 4]
         {
-        {{{1,0,0,0},{1,0,0,0},{1,0,0,0},{1,0,0,0}},{{1,1,1,1},{0,0,0,0},{0,0,0,0},{0,0,0,0}},{{0,0,0,1},{0,0,0,1},{0,0,0,1},{0,0,0,1}},{{0,0,0,0},{1,1,1,1},{0,0,0,0},{0,0,0,0}}}, // line
+        {{{0,1,0,0},{0,1,0,0},{0,1,0,0},{0,1,0,0}},{{1,1,1,1},{0,0,0,0},{0,0,0,0},{0,0,0,0}},{{0,0,0,1},{0,0,0,1},{0,0,0,1},{0,0,0,1}},{{0,0,0,0},{1,1,1,1},{0,0,0,0},{0,0,0,0}}}, // line
         {{{0,0,0,1},{0,1,1,1},{0,0,0,0},{0,0,0,0}},{{1,0,0,0},{1,0,0,0},{1,1,0,0},{0,0,0,0}},{{1,1,1,0},{1,0,0,0},{0,0,0,0},{0,0,0,0}},{{0,0,1,1},{0,0,0,1},{0,0,0,1},{0,0,0,0}}}, // Reverse L
         {{{1,0,0,0},{1,1,1,0},{0,0,0,0},{0,0,0,0}},{{1,1,0,0},{1,0,0,0},{1,0,0,0},{0,0,0,0}},{{0,1,1,1},{0,0,0,1},{0,0,0,0},{0,0,0,0}},{{0,0,0,1},{0,0,0,1},{0,0,1,1},{0,0,0,0}}}, // Foward L
         {{{0,1,1,0},{1,1,0,0},{0,0,0,0},{0,0,0,0}},{{1,0,0,0},{1,1,0,0},{0,1,0,0},{0,0,0,0}},{{0,1,1,0},{1,1,0,0},{0,0,0,0},{0,0,0,0}},{{1,0,0,0},{1,1,0,0},{0,1,0,0},{0,0,0,0}}}, // Squigly
@@ -25,7 +25,7 @@ namespace Tetris.GameState
         // top, bottom, left, right
         private static int[,,] ShapeOffsets = new int[7, 4, 4]
         {
-            { {0,0,0,3}, {0,3,0,0}, {0,0,3,0}, {1,2,0,0} },
+            { {0,0,1,2}, {0,3,0,0}, {0,0,3,0}, {1,2,0,0} },
             { {0,2,1,0}, {0,1,0,2}, {0,2,0,1}, {0,1,2,0} },
             { {0,2,0,1}, {0,1,0,2}, {0,2,1,0}, {0,1,2,0} },
             { {0,2,0,1}, {0,1,0,2}, {0,2,0,1}, {0,1,0,2} },
@@ -116,32 +116,41 @@ namespace Tetris.GameState
 
         private bool isValid(int orientation, int offsetX, int offsetY)
         {
-            if (
-                (offsetY + Math.Abs((ShapeOffsets[Type, orientation, 0] - (4 - ShapeOffsets[Type, orientation, 1]))) >= GameBoard.SizeY) ||
-                (offsetX + Math.Abs((ShapeOffsets[Type, orientation, 2] - (4 - ShapeOffsets[Type, orientation, 3]))) >= GameBoard.SizeX) ||
-                (offsetY < 0) ||
-                (offsetX < 0)
-                ) return false;
-
-            for (int y=ShapeOffsets[Type, orientation, 0]; y<(4 - ShapeOffsets[Type, orientation, 1]); y++)
-            {
-                for(int x=ShapeOffsets[Type, orientation, 2]; x<(4 - ShapeOffsets[Type, orientation, 3]); x++)
-                {
-                    if (ShapePositions[Type, orientation, y, x] == 1 && Game[offsetY + y, offsetX + x] != 0) return false;
-                }
-            }
+            if(offsetX < 0 || offsetY < 0 ||
+                (offsetY + (4 - ShapeOffsets[Type, orientation, 0] + ShapeOffsets[Type, orientation, 1]) > GameBoard.SizeY) ||
+                (offsetX + (4 - ShapeOffsets[Type, orientation, 2] + ShapeOffsets[Type, orientation, 3]) > GameBoard.SizeX))
+                return false;
             return true;
 
         }
 
         public void reDraw()
         {
+            System.Console.WriteLine("Offsets " + offset[0] + " " + offset[1]);
             // clear out the old positions
             foreach (Rectangle rect in Rectangles)
             {
                 GameCanvas.Children.Remove(rect);
             }
 
+            for(int y=ShapeOffsets[Type, Orientation, 0]; y < 4 - ShapeOffsets[Type, Orientation, 1]; y++)
+            {
+                for(int x=ShapeOffsets[Type, Orientation, 2]; x < 4 - ShapeOffsets[Type, Orientation, 3]; x++)
+                {
+                    if(ShapePositions[Type, Orientation, y, x] == 1)
+                    {
+                        Rectangle rect = new Rectangle() { Height = BlockHeight, Width = BlockWidth };
+                        Canvas.SetTop(rect, (BlockHeight * (y - ShapeOffsets[Type, Orientation, 0])) + (offset[1] * BlockHeight));
+                        Canvas.SetLeft(rect, (BlockHeight * (x - ShapeOffsets[Type, Orientation, 2])) + (offset[0] * BlockWidth));
+                        rect.Fill = Brushes.Aqua;
+
+                        Rectangles.Add(rect);
+                        GameCanvas.Children.Add(rect);
+                    }
+                }
+            }
+            
+            /*
             for (int x = 0; x < 4; x++)
             {
                 for (int y = 0; y < 4; y++)
@@ -158,6 +167,7 @@ namespace Tetris.GameState
                     }
                 }
             }
+            */
         }
     }
 }
