@@ -11,10 +11,10 @@ namespace Tetris.GameState
 {
     class TetrisGameManager
     {
-        int Score;
-        int Level;
+        public int Score { get; set; }
+        public int Level { get; set; }
+
         GameBoard Game;
-        DispatcherTimer Timer = new DispatcherTimer();
 
         public static SolidColorBrush[] ShapeColors = new SolidColorBrush[7] {
             Brushes.Aqua, // line
@@ -34,8 +34,8 @@ namespace Tetris.GameState
 
         public TetrisGameManager(ref Canvas gameCanvas)
         {
-            Timer.Tick += Timer_Tick;
-            Timer.Interval = new TimeSpan(0, 0, 0, 500);
+            this.Score = Scr;
+            this.Level = Lvl;
 
             Board = new GameBoard(ref gameCanvas);
 
@@ -43,59 +43,6 @@ namespace Tetris.GameState
             SetNewBlock();
         }
 
-        private Boolean SetNewBlock()
-        {
-            Random rnd = new Random();
-            return CurrentFallingBlock.newBlock(rnd.Next(0, 7), rnd.Next(0, 4), rnd.Next(4, 7));
-        }
-        
-        public void moveLeft()
-        {
-            CurrentFallingBlock.moveLeft();
-        }
-
-        public void moveRight()
-        {
-            CurrentFallingBlock.moveRight();
-        }
-
-        public void moveDown()
-        {
-            CurrentFallingBlock.moveDown();
-        }
-
-        public void rotate()
-        {
-            CurrentFallingBlock.rotatePositive();
-        }
-
-        public Boolean Tick()
-        {
-            if (!CurrentFallingBlock.moveDown())
-            {
-                if(!SetNewBlock())
-                    return false;
-            }
-
-            // DO SOME SCORING HERE
-            int RowsCleared = Board.clearRows();
-            return true;
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void StartTimer()
-        {
-
-        }
-
-        public void StopTimer()
-        {
-
-        }
 
     }
 }
