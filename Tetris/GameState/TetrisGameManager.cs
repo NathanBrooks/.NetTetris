@@ -14,7 +14,7 @@ namespace Tetris.GameState
         public int Score { get; set; }
         public int Level { get; set; }
 
-        GameBoard Game;
+        //GameBoard Game;
 
         public static SolidColorBrush[] ShapeColors = new SolidColorBrush[7] {
             Brushes.Aqua, // line

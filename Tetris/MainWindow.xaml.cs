@@ -72,7 +72,8 @@ namespace Tetris
 
         private void save_btn_Click(object sender, RoutedEventArgs e)
         {
-            
+            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+            dialog.ShowDialog();
 
             /*IFormatter Save = new BinaryFormatter();
             Stream Write = new FileStream("savefile.tet", FileMode.Create, FileAccess.Write);
@@ -92,6 +93,16 @@ namespace Tetris
             Read.Close();
             temp1.Content = test.Score;
             temp2.Content = test.Level;*/
+        }
+
+        private void start_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Timer.Start();
+        }
+
+        private void pause_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Timer.Stop();
         }
     }
 }
