@@ -33,6 +33,24 @@ namespace Tetris.GameState
         private FallingBlock CurrentFallingBlock;
         private GameBoard Board;
 
+        public void saveState(ref SaveState bundle)
+        {
+            bundle.saveScore = this.Score;
+            bundle.saveLevel = this.Level;
+            bundle.saveLineCount = this.TotalLines;
+            Board.saveState(ref bundle);
+            CurrentFallingBlock.saveState(ref bundle);
+        }
+
+        public void loadState(SaveState bundle)
+        {
+            this.Score = bundle.saveScore;
+            this.Level = bundle.saveLevel;
+            this.TotalLines = bundle.saveLineCount;
+            Board.loadState(bundle);
+            CurrentFallingBlock.loadState(bundle);
+        }
+
         public TetrisGameManager(int Scr, int Lvl, ref Canvas gameCanvas)
         {
             this.Score = Scr;

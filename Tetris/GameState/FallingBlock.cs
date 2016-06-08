@@ -44,6 +44,21 @@ namespace Tetris.GameState
 
         private ArrayList Rectangles = new ArrayList();
 
+        public void saveState(ref SaveState bundle)
+        {
+            bundle.saveFallingOfffset = this.offset;
+            bundle.saveFallingType = this.Type;
+            bundle.saveFallingOrientation = this.Orientation;
+        }
+
+        public void loadState(SaveState bundle)
+        {
+            this.offset = bundle.saveFallingOfffset;
+            this.Type = bundle.saveFallingType;
+            this.Orientation = bundle.saveFallingOrientation;
+            reDraw();
+        }
+
         public FallingBlock(ref GameBoard board, ref Canvas gameCanvas)
         {
             this.Game = board;

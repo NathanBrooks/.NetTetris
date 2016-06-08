@@ -19,6 +19,17 @@ namespace Tetris.GameState
 
         ArrayList Rectangles = new ArrayList();
 
+        public void saveState(ref SaveState bundle)
+        {
+            bundle.saveGameBoard = Board;
+        }
+
+        public void loadState(SaveState bundle)
+        {
+            Board = bundle.saveGameBoard;
+            reDraw();
+        }
+
         public GameBoard(ref Canvas gameCanvas)
         {
             this.GameCanvas = gameCanvas;

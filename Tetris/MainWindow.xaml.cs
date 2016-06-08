@@ -25,8 +25,6 @@ namespace Tetris
     /// </summary>
     public partial class MainWindow : Window
     {
-        //TetrisGameManager test = new TetrisGameManager(20000, 3);
-        //SaveState save1 = new SaveState(40000, 5 , null, 2, 3, 4, 3);
         DispatcherTimer Timer = new DispatcherTimer();
 
         private TetrisGameManager game;
@@ -110,30 +108,45 @@ namespace Tetris
 
         private void save_btn_Click(object sender, RoutedEventArgs e)
         {
+            Timer.Stop();
             Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.ShowDialog();
-            string savefile = dialog.FileName;
+            dialog.Filter = "Tetris Save File|*.tet";
+            Nullable<bool> result = dialog.ShowDialog();
+            if(result == true)
+            {
+                string savefile = dialog.FileName;
+                SaveState saveBundle = new SaveState();
 
-            /*IFormatter Save = new BinaryFormatter();
-            Stream Write = new FileStream("savefile.tet", FileMode.Create, FileAccess.Write);
-            Save.Serialize(Write, save1);
-            Write.Close();*/
+                game.saveState(ref saveBundle);
+
+                IFormatter Save = new BinaryFormatter();
+                Stream Write = new FileStream(savefile, FileMode.Create, FileAccess.Write);
+                Save.Serialize(Write, saveBundle);
+                Write.Close();
+            }
         }
 
         private void load_btn_Click(object sender, RoutedEventArgs e)
         {
+            Timer.Stop();
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.ShowDialog();
-            string loadfile = dialog.FileName;
+            dialog.Filter = "Tetris Save File|*.tet";
+            Nullable<bool> result = dialog.ShowDialog();
+            if(result == true)
+            {
+                string loadfile = dialog.FileName;
 
-            /*IFormatter Load = new BinaryFormatter();
-            Stream Read = new FileStream("savefile.tet", FileMode.Open, FileAccess.Read);
-            save1 = (SaveState) Load.Deserialize(Read);
-            test.Level = save1.saveLevel;
-            test.Score = save1.saveScore;
-            Read.Close();
-            temp1.Content = test.Score;
-            temp2.Content = test.Level;*/
+                IFormatter Load = new BinaryFormatter();
+                Stream Read = new FileStream(loadfile, FileMode.Open, FileAccess.Read);
+                SaveState loadBundle = (SaveState)Load.Deserialize(Read);
+                Read.Close();
+
+                game.loadState(loadBundle);
+                // update display
+                this.score_txt.Text = game.Score.ToString();
+                this.level_txt.Text = game.Level.ToString();
+
+            }
         }
 
         private void start_btn_Click(object sender, RoutedEventArgs e)

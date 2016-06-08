@@ -11,21 +11,20 @@ namespace Tetris.GameState
     {
         public int saveScore { get; set; }
         public int saveLevel { get; set; }
-        public int[] saveGameBoard { get; set; }
-        public int saveFallingX { get; set; }
-        public int saveFallingY { get; set; }
+        public int saveLineCount { get; set; }
+        public int[,] saveGameBoard { get; set; }
+        public int[] saveFallingOfffset { get; set; }
         public int saveFallingType { get; set; }
         public int saveFallingOrientation { get; set; }
 
-        public SaveState(int scr, int lvl, int[] gb, int x, int y, int type, int ori)
+        public SaveState()
         {
-            this.saveScore = scr;
-            this.saveLevel = lvl;
-            this.saveGameBoard = gb;
-            this.saveFallingX = x;
-            this.saveFallingY = y;
-            this.saveFallingType = type;
-            this.saveFallingOrientation = ori;
+            this.saveScore = 0;
+            this.saveLevel = 1;
+            this.saveGameBoard = null;
+            this.saveFallingOfffset = null;
+            this.saveFallingType = 0;
+            this.saveFallingOrientation = 0;
         }
 
     }
