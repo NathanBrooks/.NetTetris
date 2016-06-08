@@ -14,6 +14,7 @@ namespace Tetris.GameState
         public int Score { get; private set; }
         public int Level { get; private set; }
         public int TotalLines { get; private set; }
+        private bool gameHasStarted;
 
         //GameBoard Game;
 
@@ -53,6 +54,7 @@ namespace Tetris.GameState
 
         public TetrisGameManager(int Scr, int Lvl, ref Canvas gameCanvas)
         {
+            this.gameHasStarted = false;
             this.Score = Scr;
             this.Level = Lvl;
             this.TotalLines = 0;
@@ -60,7 +62,6 @@ namespace Tetris.GameState
             Board = new GameBoard(ref gameCanvas);
 
             CurrentFallingBlock = new FallingBlock(ref Board, ref gameCanvas);
-            SetNewBlock();
         }
 
         private Boolean SetNewBlock()
@@ -102,6 +103,11 @@ namespace Tetris.GameState
 
         public Boolean Tick()
         {
+            if(!gameHasStarted)
+            {
+                SetNewBlock();
+                gameHasStarted = true;
+            }
             if (!CurrentFallingBlock.moveDown())
             {
                 Scoring();

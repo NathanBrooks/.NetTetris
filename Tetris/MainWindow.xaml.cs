@@ -29,6 +29,9 @@ namespace Tetris
 
         private TetrisGameManager game;
         private Boolean GameOver;
+        Rectangle overlay = new Rectangle();
+        TextBlock pause = new TextBlock();
+        TextBlock gameover = new TextBlock();
 
         public MainWindow()
         {
@@ -40,7 +43,7 @@ namespace Tetris
             this.Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             this.score_txt.Text = game.Score.ToString();
             this.level_txt.Text = game.Level.ToString();
-            this.Timer.Start();
+            this.lvl_txt.Text = game.TotalLines.ToString();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -52,6 +55,16 @@ namespace Tetris
             else
             {
                 Timer.Stop();
+                gameover.Text = "Game Over";
+                gameover.FontSize = 30;
+                gameover.Foreground = Brushes.White;
+                gameover.Margin = new Thickness(78, 250, 0, 0);
+                overlay.Height = 540;
+                overlay.Width = 300;
+                Brush test = new SolidColorBrush(Color.FromArgb(200, 11, 11, 11));
+                overlay.Fill = test;
+                GameCanvas.Children.Add(overlay);
+                GameCanvas.Children.Add(gameover);
             }
         }
 
@@ -61,6 +74,7 @@ namespace Tetris
             GameOver = !game.Tick();
             this.score_txt.Text = game.Score.ToString();
             this.level_txt.Text = game.Level.ToString();
+            this.lvl_txt.Text = game.TotalLines.ToString();
 
             if (previouslevel != game.Level)
             {
@@ -153,11 +167,27 @@ namespace Tetris
         {
             Timer.Start();
             GameCanvas.Focus();
+            GameCanvas.Children.Remove(overlay);
+            GameCanvas.Children.Remove(pause);
+            pause_btn.IsEnabled = true;
+            start_btn.IsEnabled = false;
         }
 
         private void pause_btn_Click(object sender, RoutedEventArgs e)
         {
+            pause.Text = "Paused";
+            pause.FontSize = 30;
+            pause.Foreground = Brushes.White;
+            pause.Margin = new Thickness(103, 250, 0, 0);
             Timer.Stop();
+            overlay.Height = 540;
+            overlay.Width = 300;
+            Brush test = new SolidColorBrush(Color.FromArgb(200, 11, 11, 11));
+            overlay.Fill = test;
+            GameCanvas.Children.Add(overlay);
+            GameCanvas.Children.Add(pause);
+            pause_btn.IsEnabled = false;
+            start_btn.IsEnabled = true;
         }
     }
 }
