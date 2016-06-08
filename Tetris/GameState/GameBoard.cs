@@ -34,7 +34,7 @@ namespace Tetris.GameState
         public int clearRows()
         {
             int rowscleared = 0;
-            for(int i = SizeY - 1; i > 0; i--)
+            for(int i = 0; i < SizeY; i++)
             {
                 bool clear = true;
                 for(int j = 0; j < 10; j++)
