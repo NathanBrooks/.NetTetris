@@ -49,13 +49,29 @@ namespace Tetris
         { 
             if(!GameOver)
             {
-                GameOver = !game.Tick();
-                this.score_txt.Text = game.Score.ToString();
-                this.level_txt.Text = game.Level.ToString();
+                Update();
             } 
             else
             {
                 Timer.Stop();
+            }
+        }
+
+        private void Update()
+        {
+            int previouslevel = game.Level;
+            GameOver = !game.Tick();
+            this.score_txt.Text = game.Score.ToString();
+            this.level_txt.Text = game.Level.ToString();
+
+            if (previouslevel != game.Level)
+            {
+                Timer.Stop();
+                int newtime = 500;
+                for (int i = game.Level; i > 1; i--) newtime -= (int)(newtime * .25);
+                Console.WriteLine(newtime);
+                Timer.Interval = new TimeSpan(0, 0, 0, 0, newtime);
+                Timer.Start();
             }
         }
 
@@ -83,7 +99,12 @@ namespace Tetris
             }
             if(e.Key == Key.Space)
             {
-
+                if(!GameOver)
+                    game.moveToBottom();
+            }
+            if(e.Key == Key.Home)
+            {
+                game.cheatcode();
             }
         }
 

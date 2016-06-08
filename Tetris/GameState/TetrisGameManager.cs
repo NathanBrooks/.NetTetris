@@ -11,8 +11,9 @@ namespace Tetris.GameState
 {
     class TetrisGameManager
     {
-        public int Score { get; set; }
-        public int Level { get; set; }
+        public int Score { get; private set; }
+        public int Level { get; private set; }
+        public int TotalLines { get; private set; }
 
         //GameBoard Game;
 
@@ -36,6 +37,7 @@ namespace Tetris.GameState
         {
             this.Score = Scr;
             this.Level = Lvl;
+            this.TotalLines = 0;
 
             Board = new GameBoard(ref gameCanvas);
 
@@ -64,41 +66,59 @@ namespace Tetris.GameState
             CurrentFallingBlock.moveDown();
         }
 
+        public void moveToBottom()
+        {
+            CurrentFallingBlock.moveToBottom();
+        }
+
         public void rotate()
         {
             CurrentFallingBlock.rotatePositive();
+        }
+
+        public void cheatcode()
+        {
+            this.Level = Math.Min(this.Level + 1, 10);
+            TotalLines = 10 * this.Level;
         }
 
         public Boolean Tick()
         {
             if (!CurrentFallingBlock.moveDown())
             {
-                // DO SOME SCORING HERE
-                int RowsCleared = Board.clearRows();
-
-                if(RowsCleared == 1)
-                {
-                    Score = Score + (Level * 100);
-                }
-                else if(RowsCleared == 2)
-                {
-                    Score = Score + (Level * 250);
-                }
-                else if(RowsCleared == 3)
-                {
-                    Score = Score + (Level * 400);
-                }
-                else if(RowsCleared == 4)
-                {
-                    Score = Score + (Level * 550);
-                }
-
+                Scoring();
                 if (!SetNewBlock())
                     return false;
             }
-            
+
             return true;
         }
+
+        public void Scoring()
+        {
+            // DO SOME SCORING HERE
+            int RowsCleared = Board.clearRows();
+
+            if(RowsCleared == 1)
+            {
+                Score = Score + (Level * 100);
+            }
+            else if(RowsCleared == 2)
+            {
+                Score = Score + (Level * 250);
+            }
+            else if(RowsCleared == 3)
+            {
+                Score = Score + (Level * 400);
+            }
+            else if(RowsCleared == 4)
+            {
+                Score = Score + (Level * 550);
+            }
+
+            TotalLines += RowsCleared;
+            Level = Math.Min((TotalLines / 10) + 1, 10);
+        }            
 
     }
 }

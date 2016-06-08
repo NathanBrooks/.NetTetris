@@ -124,6 +124,12 @@ namespace Tetris.GameState
             }
         }
 
+        public Boolean moveToBottom()
+        {
+            while (moveDown());
+            return true;
+        }
+
         private void addToGameBoard()
         {
             for (int y = ShapeOffsets[Type, Orientation, 0]; y < 4 - ShapeOffsets[Type, Orientation, 1]; y++)
@@ -167,7 +173,6 @@ namespace Tetris.GameState
 
         public void reDraw()
         {
-            System.Console.WriteLine("Offsets " + offset[0] + " " + offset[1]);
             // clear out the old positions
             foreach (Rectangle rect in Rectangles)
             {
