@@ -14,7 +14,7 @@ namespace Tetris.GameState
         public int Score { get; set; }
         public int Level { get; set; }
 
-        GameBoard Game;
+        //GameBoard Game;
 
         public static SolidColorBrush[] ShapeColors = new SolidColorBrush[7] {
             Brushes.Aqua, // line
@@ -73,12 +73,12 @@ namespace Tetris.GameState
         {
             if (!CurrentFallingBlock.moveDown())
             {
+                // DO SOME SCORING HERE
+                int RowsCleared = Board.clearRows();
+
                 if (!SetNewBlock())
                     return false;
             }
-
-            // DO SOME SCORING HERE
-            int RowsCleared = Board.clearRows();
             return true;
         }
 

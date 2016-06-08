@@ -33,6 +33,32 @@ namespace Tetris.GameState
 
         public int clearRows()
         {
+            for(int i = 0; i < SizeY; i++)
+            {
+                bool clear = true;
+                for(int j = 0; j < 10; j++)
+                {
+                    if(Board[i,j] == 0)
+                    {
+                        clear = false;
+                    }
+                }
+                if (clear == true)
+                {
+                    for(int x = i; x > 0; x--)
+                    {
+                        for(int y = 0; y < 10; y++)
+                        {
+                            Board[x, y] = Board[x - 1, y];
+                        }
+                    }
+
+                    for(int h = 0; h < 10; h++)
+                    {
+                        Board[0, h] = 0;
+                    }
+                }
+            }
             reDraw();
             return 0;
         }
