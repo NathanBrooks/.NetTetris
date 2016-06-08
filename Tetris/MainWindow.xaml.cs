@@ -30,11 +30,13 @@ namespace Tetris
         DispatcherTimer Timer = new DispatcherTimer();
 
         private TetrisGameManager game;
+        private Boolean GameOver;
 
         public MainWindow()
         {
             InitializeComponent();
             game = new TetrisGameManager(0, 0, ref GameCanvas);
+            GameOver = false;
             this.KeyDown += MainWindow_KeyDown;
             this.Timer.Tick += Timer_Tick;
             this.Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
@@ -43,26 +45,36 @@ namespace Tetris
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            game.Tick();
+            if(!GameOver)
+            {
+                GameOver = !game.Tick();
+            } else
+            {
+                Timer.Stop();
+            }
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.Key == Key.Left)
             {
-                game.moveLeft();
+                if (!GameOver)
+                    game.moveLeft();
             }
             if(e.Key == Key.Right)
             {
-                game.moveRight();
+                if (!GameOver)
+                    game.moveRight();
             }
             if(e.Key == Key.Up)
             {
-                game.rotate();
+                if (!GameOver)
+                    game.rotate();
             }
             if(e.Key == Key.Down)
             {
-                game.Tick();
+                if(!GameOver)
+                    GameOver = !game.Tick();
             }
             if(e.Key == Key.Space)
             {
