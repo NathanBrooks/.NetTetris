@@ -79,6 +79,22 @@ namespace Tetris.GameState
 
             // DO SOME SCORING HERE
             int RowsCleared = Board.clearRows();
+            if(RowsCleared == 1)
+            {
+                Score = Score + (Level * 100);
+            }
+            else if(RowsCleared == 2)
+            {
+                Score = Score + (Level * 250);
+            }
+            else if(RowsCleared == 3)
+            {
+                Score = Score + (Level * 400);
+            }
+            else if(RowsCleared == 4)
+            {
+                Score = Score + (Level * 550);
+            }
             return true;
         }
 

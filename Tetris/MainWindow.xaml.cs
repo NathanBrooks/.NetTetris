@@ -34,16 +34,20 @@ namespace Tetris
         public MainWindow()
         {
             InitializeComponent();
-            game = new TetrisGameManager(0, 0, ref GameCanvas);
+            game = new TetrisGameManager(0, 1, ref GameCanvas);
             this.KeyDown += MainWindow_KeyDown;
             this.Timer.Tick += Timer_Tick;
             this.Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+            this.score_txt.Text = game.Score.ToString();
+            this.level_txt.Text = game.Level.ToString();
             this.Timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             game.Tick();
+            this.score_txt.Text = game.Score.ToString();
+            this.level_txt.Text = game.Level.ToString();
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -74,6 +78,7 @@ namespace Tetris
         {
             Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.ShowDialog();
+            string savefile = dialog.FileName;
 
             /*IFormatter Save = new BinaryFormatter();
             Stream Write = new FileStream("savefile.tet", FileMode.Create, FileAccess.Write);
@@ -85,6 +90,8 @@ namespace Tetris
         {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.ShowDialog();
+            string loadfile = dialog.FileName;
+
             /*IFormatter Load = new BinaryFormatter();
             Stream Read = new FileStream("savefile.tet", FileMode.Open, FileAccess.Read);
             save1 = (SaveState) Load.Deserialize(Read);
@@ -98,6 +105,7 @@ namespace Tetris
         private void start_btn_Click(object sender, RoutedEventArgs e)
         {
             Timer.Start();
+            GameCanvas.Focus();
         }
 
         private void pause_btn_Click(object sender, RoutedEventArgs e)

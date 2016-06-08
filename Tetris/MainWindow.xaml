@@ -41,8 +41,8 @@
         </Canvas>
         <Label x:Name="score_lbl" Content="SCORE" HorizontalAlignment="Left" Margin="441,76,0,0" VerticalAlignment="Top" Width="75" FontSize="21.333"/>
         <Label x:Name="level_lbl" Content="LEVEL" HorizontalAlignment="Left" Margin="351,76,0,0" VerticalAlignment="Top" Width="64" FontSize="21.333"/>
-        <TextBox x:Name="level_txt" HorizontalAlignment="Left" Height="48" Margin="351,114,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="64" FontSize="32" SelectionOpacity="-17" TextAlignment="Center" IsReadOnly="True"/>
-        <TextBox x:Name="score_txt" HorizontalAlignment="Left" Height="32" Margin="441,114,0,0" TextWrapping="Wrap" Text="200000" VerticalAlignment="Top" Width="75" FontSize="21.333" TextAlignment="Center" IsReadOnly="True"/>
+        <TextBox x:Name="level_txt" HorizontalAlignment="Left" Height="48" Margin="351,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" FontSize="32" SelectionOpacity="-17" TextAlignment="Center" IsReadOnly="True"/>
+        <TextBox x:Name="score_txt" HorizontalAlignment="Left" Height="32" Margin="441,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" FontSize="21.333" TextAlignment="Center" IsReadOnly="True"/>
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="670">
             <MenuItem FontSize="17" Header="File">
                 <MenuItem Header="Save" Click="save_btn_Click"/>

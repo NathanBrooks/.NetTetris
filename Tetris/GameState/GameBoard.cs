@@ -33,6 +33,7 @@ namespace Tetris.GameState
 
         public int clearRows()
         {
+            int rowscleared = 0;
             for(int i = SizeY - 1; i > 0; i--)
             {
                 bool clear = true;
@@ -57,10 +58,11 @@ namespace Tetris.GameState
                     {
                         Board[0, h] = 0;
                     }
+                    rowscleared++;
                 }
             }
             reDraw();
-            return 0;
+            return rowscleared;
         }
 
         private void reDraw()
