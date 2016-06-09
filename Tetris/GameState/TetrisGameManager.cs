@@ -101,6 +101,12 @@ namespace Tetris.GameState
             TotalLines = 10 * this.Level;
         }
 
+        public void clearCanvas()
+        {
+            Board.clearCanvas();
+            CurrentFallingBlock.clearfalling();
+        }
+
         public Boolean Tick()
         {
             if(!gameHasStarted)

@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tetris"
         mc:Ignorable="d"
-        Title="Tetris" Height="629.18" Width="487.898">
+        Title="etris" Height="629.18" Width="487.898" Icon="t.ico">
     <Grid>
         <Canvas Name="GameCanvas" HorizontalAlignment="Left" Height="540" Margin="28,31,0,0" VerticalAlignment="Top" Width="300" Background="Black">
-            
+
             <Line X1="30" Y1="0" X2="30" Y2="540" Stroke="#4CD3D3D3" />
             <Line X1="60" Y1="0" X2="60" Y2="540" Stroke="#4CD3D3D3" />
             <Line X1="90" Y1="0" X2="90" Y2="540" Stroke="#4CD3D3D3" />
@@ -44,11 +44,13 @@
         <Label x:Name="level_lbl" Content="LEVEL" HorizontalAlignment="Left" Margin="351,76,0,0" VerticalAlignment="Top" Width="64" FontSize="21.333"/>
         <TextBox x:Name="level_txt" HorizontalAlignment="Left" Height="48" Margin="351,114,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" FontSize="32" SelectionOpacity="-17" TextAlignment="Center" IsReadOnly="True" Focusable="False"/>
         <TextBox x:Name="score_txt" HorizontalAlignment="Left" Height="32" Margin="351,212,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" FontSize="21.333" TextAlignment="Center" IsReadOnly="True" Focusable="False"/>
-        <Menu x:Name="menu" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="670">
+        <Menu x:Name="menu" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="480">
             <MenuItem FontSize="17" Header="File" Focusable="False">
+                <MenuItem Header="Start New Game" Click="startnewgame_click"/>
                 <MenuItem Header="Save" Click="save_btn_Click"/>
                 <MenuItem Header="Load" Click="load_btn_Click"/>
             </MenuItem>
+            <MenuItem Header="About" FontSize="16" Click="about_click"/>
         </Menu>
         <Button x:Name="start_btn" Content="Start" HorizontalAlignment="Left" Margin="351,387,0,0" VerticalAlignment="Top" Width="73" Height="75" FontSize="29.333" Click="start_btn_Click" Focusable="False"/>
         <Button x:Name="pause_btn" Content="Pause" HorizontalAlignment="Left" Margin="351,496,0,0" VerticalAlignment="Top" Width="73" Height="75" FontSize="26.667" Click="pause_btn_Click" Focusable="False" IsEnabled="False"/>
