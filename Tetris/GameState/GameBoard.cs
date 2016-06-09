@@ -1,4 +1,7 @@
-﻿using System;
+﻿/* GameBoard
+ * this is the gameboard class, it holds the game board
+ */
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

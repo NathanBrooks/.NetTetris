@@ -1,4 +1,7 @@
-﻿using System;
+﻿/* TetrisGameManager
+ * This class is the brains of the game
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* MainWindow
+ * controls user interface 
+ */
+
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;

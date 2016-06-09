@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* FallingBlock
+ * Controls falling blocks not yet committed to the game board
+ * this also holds all the bounding logic
+ */
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

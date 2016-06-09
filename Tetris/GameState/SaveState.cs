@@ -1,4 +1,7 @@
-﻿using System;
+﻿/* SaveState
+ * this object is passed around to save our game information in a serializable object
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
