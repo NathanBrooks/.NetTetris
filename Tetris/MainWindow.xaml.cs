@@ -98,6 +98,8 @@ namespace Tetris
                 overlay.Fill = test;
                 GameCanvas.Children.Add(overlay);
                 GameCanvas.Children.Add(gameover);
+                start_btn.IsEnabled = false;
+                pause_btn.IsEnabled = false;
             }
         }
 
@@ -230,6 +232,23 @@ namespace Tetris
                 pause_btn.IsEnabled = false;
                 start_btn.IsEnabled = true;
             }
+        }
+
+        private void startnewgame_click(object sender, RoutedEventArgs e)
+        {
+            Timer.Stop();
+            game.clearCanvas();
+            GameCanvas.Children.Remove(overlay);
+            GameCanvas.Children.Remove(gameover);
+            GameCanvas.Children.Remove(pause);
+            game = new TetrisGameManager(0, 1, ref GameCanvas);
+            start_btn.IsEnabled = true;
+            GameOver = false;
+        }
+
+        private void about_click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Developers: Nathan Brooks, Vlad Sinitsa\nVersion: 1.0\n.Net Version: 4.5.2");
         }
     }
 }

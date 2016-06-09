@@ -76,12 +76,17 @@ namespace Tetris.GameState
             return rowscleared;
         }
 
-        private void reDraw()
+        public void clearCanvas()
         {
             foreach (Rectangle rect in Rectangles)
             {
                 GameCanvas.Children.Remove(rect);
             }
+        }
+
+        private void reDraw()
+        {
+            clearCanvas();
 
             for (int y=0; y<SizeY; y++)
             {

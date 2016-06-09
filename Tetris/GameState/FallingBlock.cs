@@ -186,13 +186,18 @@ namespace Tetris.GameState
 
         }
 
-        public void reDraw()
+        public void clearfalling()
         {
-            // clear out the old positions
             foreach (Rectangle rect in Rectangles)
             {
                 GameCanvas.Children.Remove(rect);
             }
+        }
+
+        public void reDraw()
+        {
+            // clear out the old positions
+            clearfalling();
 
             for(int y=ShapeOffsets[Type, Orientation, 0]; y < 4 - ShapeOffsets[Type, Orientation, 1]; y++)
             {
