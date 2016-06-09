@@ -177,7 +177,7 @@ namespace Tetris
 
         private void save_btn_Click(object sender, RoutedEventArgs e)
         {
-            if (game.gameHasStarted)
+            if (game.gameHasStarted && !GameOver)
             { 
                 pause_btn_Click(null, null);
                 Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
@@ -217,6 +217,11 @@ namespace Tetris
                 // update display
                 this.score_txt.Text = game.Score.ToString();
                 this.level_txt.Text = game.Level.ToString();
+                GameCanvas.Children.Remove(gameover);
+                GameCanvas.Children.Remove(overlay);
+                paused = false;
+                GameOver = false;
+                pause_btn_Click(null, null);
             }
         }
 
