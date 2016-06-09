@@ -93,6 +93,8 @@ namespace Tetris.GameState
                         Canvas.SetTop(rect, (TetrisGameManager.BlockHeight * y));
                         Canvas.SetLeft(rect, (TetrisGameManager.BlockHeight * x));
                         rect.Fill = TetrisGameManager.ShapeColors[Board[y, x] - 1];
+                        rect.StrokeThickness = 1;
+                        rect.Stroke = System.Windows.Media.Brushes.White;
 
                         Rectangles.Add(rect);
                         GameCanvas.Children.Add(rect);

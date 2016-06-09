@@ -14,7 +14,7 @@ namespace Tetris.GameState
         public int Score { get; private set; }
         public int Level { get; private set; }
         public int TotalLines { get; private set; }
-        private bool gameHasStarted;
+        public bool gameHasStarted { get; private set; }
 
         //GameBoard Game;
 

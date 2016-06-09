@@ -33,9 +33,18 @@ namespace Tetris
         TextBlock pause = new TextBlock();
         TextBlock gameover = new TextBlock();
 
+        private RoutedCommand rNewGame;
+        private RoutedCommand rSave;
+        private RoutedCommand rLoad;
+        private RoutedCommand rPause;
+        private RoutedCommand rPlay;
+
+        private bool paused;
+
         public MainWindow()
         {
             InitializeComponent();
+            initializeKeyBindings();
             game = new TetrisGameManager(0, 1, ref GameCanvas);
             GameOver = false;
             this.KeyDown += MainWindow_KeyDown;
@@ -44,6 +53,30 @@ namespace Tetris
             this.score_txt.Text = game.Score.ToString();
             this.level_txt.Text = game.Level.ToString();
             this.lvl_txt.Text = game.TotalLines.ToString();
+            paused = true;
+        }
+
+        private void initializeKeyBindings()
+        {
+            rPlay = new RoutedCommand();
+            rPlay.InputGestures.Add(new KeyGesture(Key.G, ModifierKeys.Control));
+            CommandBindings.Add(new CommandBinding(rPlay, start_btn_Click));
+
+            rPause = new RoutedCommand();
+            rPause.InputGestures.Add(new KeyGesture(Key.P, ModifierKeys.Control));
+            CommandBindings.Add(new CommandBinding(rPause, pause_btn_Click));
+
+            rSave = new RoutedCommand();
+            rSave.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
+            CommandBindings.Add(new CommandBinding(rSave, save_btn_Click));
+
+            rLoad = new RoutedCommand();
+            rLoad.InputGestures.Add(new KeyGesture(Key.O, ModifierKeys.Control));
+            CommandBindings.Add(new CommandBinding(rLoad, load_btn_Click));
+
+            rNewGame = new RoutedCommand();
+            rNewGame.InputGestures.Add(new KeyGesture(Key.N, ModifierKeys.Control));
+            // CommandBindings.Add(new CommandBinding(rNewGame, startnewgame_click));
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -122,27 +155,30 @@ namespace Tetris
 
         private void save_btn_Click(object sender, RoutedEventArgs e)
         {
-            Timer.Stop();
-            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.Filter = "Tetris Save File|*.tet";
-            Nullable<bool> result = dialog.ShowDialog();
-            if(result == true)
-            {
-                string savefile = dialog.FileName;
-                SaveState saveBundle = new SaveState();
+            if (game.gameHasStarted)
+            { 
+                pause_btn_Click(null, null);
+                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                dialog.Filter = "Tetris Save File|*.tet";
+                Nullable<bool> result = dialog.ShowDialog();
+                if (result == true)
+                {
+                    string savefile = dialog.FileName;
+                    SaveState saveBundle = new SaveState();
 
-                game.saveState(ref saveBundle);
+                    game.saveState(ref saveBundle);
 
-                IFormatter Save = new BinaryFormatter();
-                Stream Write = new FileStream(savefile, FileMode.Create, FileAccess.Write);
-                Save.Serialize(Write, saveBundle);
-                Write.Close();
+                    IFormatter Save = new BinaryFormatter();
+                    Stream Write = new FileStream(savefile, FileMode.Create, FileAccess.Write);
+                    Save.Serialize(Write, saveBundle);
+                    Write.Close();
+                }
             }
         }
 
         private void load_btn_Click(object sender, RoutedEventArgs e)
         {
-            Timer.Stop();
+            pause_btn_Click(null, null);
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Filter = "Tetris Save File|*.tet";
             Nullable<bool> result = dialog.ShowDialog();
@@ -159,35 +195,41 @@ namespace Tetris
                 // update display
                 this.score_txt.Text = game.Score.ToString();
                 this.level_txt.Text = game.Level.ToString();
-
             }
         }
 
         private void start_btn_Click(object sender, RoutedEventArgs e)
         {
-            Timer.Start();
-            GameCanvas.Focus();
-            GameCanvas.Children.Remove(overlay);
-            GameCanvas.Children.Remove(pause);
-            pause_btn.IsEnabled = true;
-            start_btn.IsEnabled = false;
+            if (paused && !GameOver) {
+                paused = false;
+                Timer.Start();
+                GameCanvas.Focus();
+                GameCanvas.Children.Remove(overlay);
+                GameCanvas.Children.Remove(pause);
+                pause_btn.IsEnabled = true;
+                start_btn.IsEnabled = false;
+            }
         }
 
         private void pause_btn_Click(object sender, RoutedEventArgs e)
         {
-            pause.Text = "Paused";
-            pause.FontSize = 30;
-            pause.Foreground = Brushes.White;
-            pause.Margin = new Thickness(103, 250, 0, 0);
-            Timer.Stop();
-            overlay.Height = 540;
-            overlay.Width = 300;
-            Brush test = new SolidColorBrush(Color.FromArgb(200, 11, 11, 11));
-            overlay.Fill = test;
-            GameCanvas.Children.Add(overlay);
-            GameCanvas.Children.Add(pause);
-            pause_btn.IsEnabled = false;
-            start_btn.IsEnabled = true;
+            if (!paused && !GameOver)
+            {
+                paused = true;
+                pause.Text = "Paused";
+                pause.FontSize = 30;
+                pause.Foreground = Brushes.White;
+                pause.Margin = new Thickness(103, 250, 0, 0);
+                Timer.Stop();
+                overlay.Height = 540;
+                overlay.Width = 300;
+                Brush test = new SolidColorBrush(Color.FromArgb(200, 11, 11, 11));
+                overlay.Fill = test;
+                GameCanvas.Children.Add(overlay);
+                GameCanvas.Children.Add(pause);
+                pause_btn.IsEnabled = false;
+                start_btn.IsEnabled = true;
+            }
         }
     }
 }

@@ -46,8 +46,8 @@
         <TextBox x:Name="score_txt" HorizontalAlignment="Left" Height="32" Margin="351,212,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" FontSize="21.333" TextAlignment="Center" IsReadOnly="True" Focusable="False"/>
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="670">
             <MenuItem FontSize="17" Header="File" Focusable="False">
-                <MenuItem Header="Save" Click="save_btn_Click"/>
-                <MenuItem Header="Load" Click="load_btn_Click"/>
+                <MenuItem Header="Save" Click="save_btn_Click" InputGestureText="Ctrl + S"/>
+                <MenuItem Header="Load" Click="load_btn_Click" InputGestureText="Ctrl + O"/>
             </MenuItem>
         </Menu>
         <Button x:Name="start_btn" Content="Start" HorizontalAlignment="Left" Margin="351,387,0,0" VerticalAlignment="Top" Width="73" Height="75" FontSize="29.333" Click="start_btn_Click" Focusable="False"/>

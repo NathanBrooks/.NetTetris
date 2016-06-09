@@ -204,7 +204,8 @@ namespace Tetris.GameState
                         Canvas.SetTop(rect, (TetrisGameManager.BlockHeight * (y - ShapeOffsets[Type, Orientation, 0])) + (offset[1] * TetrisGameManager.BlockHeight));
                         Canvas.SetLeft(rect, (TetrisGameManager.BlockHeight * (x - ShapeOffsets[Type, Orientation, 2])) + (offset[0] * TetrisGameManager.BlockWidth));
                         rect.Fill = TetrisGameManager.ShapeColors[Type];
-
+                        rect.StrokeThickness = 1;
+                        rect.Stroke = Brushes.White;
                         Rectangles.Add(rect);
                         GameCanvas.Children.Add(rect);
                     }
