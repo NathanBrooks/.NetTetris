@@ -38,7 +38,7 @@ namespace Tetris
         private RoutedCommand rLoad;
         private RoutedCommand rPause;
         private RoutedCommand rPlay;
-
+        private RoutedCommand rQuit;
         private bool paused;
 
         public MainWindow()
@@ -76,7 +76,11 @@ namespace Tetris
 
             rNewGame = new RoutedCommand();
             rNewGame.InputGestures.Add(new KeyGesture(Key.N, ModifierKeys.Control));
-            // CommandBindings.Add(new CommandBinding(rNewGame, startnewgame_click));
+            CommandBindings.Add(new CommandBinding(rNewGame, startnewgame_click));
+
+            rQuit = new RoutedCommand();
+            rQuit.InputGestures.Add(new KeyGesture(Key.Q, ModifierKeys.Control));
+            CommandBindings.Add(new CommandBinding(rQuit, quit_click));
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -126,25 +130,25 @@ namespace Tetris
         {
             if(e.Key == Key.Left)
             {
-                if (!GameOver)
+                if (!GameOver && !paused)
                     game.moveLeft();
             }
             if(e.Key == Key.Right)
             {
-                if (!GameOver)
+                if (!GameOver && !paused)
                     game.moveRight();
             }
             if(e.Key == Key.Up)
             {
-                if (!GameOver)
+                if (!GameOver && !paused)
                     game.rotate();
             }
             if(e.Key == Key.Down)
             {
-                if(!GameOver)
-                    GameOver = !game.Tick();
+                if(!GameOver && !paused)
+                    game.rotate();
             }
-            if(e.Key == Key.Space)
+            if(e.Key == Key.Space && !paused)
             {
                 if(!GameOver)
                     game.moveToBottom();
@@ -152,6 +156,18 @@ namespace Tetris
             if(e.Key == Key.Home)
             {
                 game.cheatcode();
+                Timer.Stop();
+
+                int newtime = 500;
+                for (int i = game.Level; i > 1; i--) newtime -= (int)(newtime * .25);
+                Console.WriteLine(newtime);
+                Timer.Interval = new TimeSpan(0, 0, 0, 0, newtime);
+                Timer.Start();
+                
+                // update display
+                this.score_txt.Text = game.Score.ToString();
+                this.level_txt.Text = game.Level.ToString();
+                this.lvl_txt.Text = game.TotalLines.ToString();
             }
         }
 
@@ -237,13 +253,24 @@ namespace Tetris
         private void startnewgame_click(object sender, RoutedEventArgs e)
         {
             Timer.Stop();
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             game.clearCanvas();
             GameCanvas.Children.Remove(overlay);
             GameCanvas.Children.Remove(gameover);
             GameCanvas.Children.Remove(pause);
             game = new TetrisGameManager(0, 1, ref GameCanvas);
+            pause_btn.IsEnabled = false;
             start_btn.IsEnabled = true;
+            this.score_txt.Text = game.Score.ToString();
+            this.level_txt.Text = game.Level.ToString();
+            this.lvl_txt.Text = game.TotalLines.ToString();
             GameOver = false;
+            paused = true;
+        }
+
+        private void quit_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         private void about_click(object sender, RoutedEventArgs e)

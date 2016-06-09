@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tetris"
         mc:Ignorable="d"
-        Title="etris" Height="629.18" Width="487.898" Icon="t.ico">
+        Title="Tetris" Height="629.18" Width="487.898" Icon="t.ico" ResizeMode="NoResize">
     <Grid>
         <Canvas Name="GameCanvas" HorizontalAlignment="Left" Height="540" Margin="28,31,0,0" VerticalAlignment="Top" Width="300" Background="Black">
 
@@ -46,9 +46,11 @@
         <TextBox x:Name="score_txt" HorizontalAlignment="Left" Height="32" Margin="351,212,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="75" FontSize="21.333" TextAlignment="Center" IsReadOnly="True" Focusable="False"/>
         <Menu x:Name="menu" HorizontalAlignment="Left" Height="26" VerticalAlignment="Top" Width="480">
             <MenuItem FontSize="17" Header="File" Focusable="False">
+                <MenuItem Header="Start New Game" Click="startnewgame_click" InputGestureText="Ctrl + N"/>
                 <MenuItem Header="Save" Click="save_btn_Click" InputGestureText="Ctrl + S"/>
                 <MenuItem Header="Load" Click="load_btn_Click" InputGestureText="Ctrl + O"/>
-                <MenuItem Header="Start New Game" Click="startnewgame_click"/>
+                <MenuItem Header="Exit" Click="quit_click" InputGestureText="Ctrl + Q"/>
+
             </MenuItem>
             <MenuItem Header="About" FontSize="16" Click="about_click"/>
         </Menu>
