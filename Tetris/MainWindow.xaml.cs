@@ -33,9 +33,12 @@ namespace Tetris
 
         private TetrisGameManager game;
         private Boolean GameOver;
-        Rectangle overlay = new Rectangle();
-        TextBlock pause = new TextBlock();
-        TextBlock gameover = new TextBlock();
+
+        private bool OverlayShown;
+
+        Rectangle OverlayRect = new Rectangle();
+        TextBlock PauseText = new TextBlock();
+        TextBlock GameOverText = new TextBlock();
 
         private RoutedCommand rNewGame;
         private RoutedCommand rSave;
@@ -48,19 +51,107 @@ namespace Tetris
         public MainWindow()
         {
             InitializeComponent();
-            initializeKeyBindings();
+            InitializeKeyBindings();
+            InitializeOverlayObjects();
+
             game = new TetrisGameManager(0, 1, ref GameCanvas);
+
             GameOver = false;
+            paused = false;
+
             this.KeyDown += MainWindow_KeyDown;
             this.Timer.Tick += Timer_Tick;
             this.Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             this.score_txt.Text = game.Score.ToString();
             this.level_txt.Text = game.Level.ToString();
             this.lvl_txt.Text = game.TotalLines.ToString();
-            paused = true;
+
+            PauseGame();
         }
 
-        private void initializeKeyBindings()
+        private void InitializeOverlayObjects()
+        {
+            // initialize pause text
+            PauseText.Text = "Paused";
+            PauseText.FontSize = 30;
+            PauseText.Foreground = Brushes.White;
+            PauseText.Margin = new Thickness(103, 250, 0, 0);
+
+            // initialize game over text
+            GameOverText.Text = "Game Over";
+            GameOverText.FontSize = 30;
+            GameOverText.Foreground = Brushes.White;
+            GameOverText.Margin = new Thickness(78, 250, 0, 0);
+
+            // initialize overlay
+            OverlayRect.Height = 540;
+            OverlayRect.Width = 300;
+            Brush test = new SolidColorBrush(Color.FromArgb(200, 11, 11, 11));
+            OverlayRect.Fill = test;
+        }
+
+        private void ShowGameOver()
+        {
+            if (OverlayShown) RemoveOverlays();
+            GameCanvas.Children.Add(OverlayRect);
+            GameCanvas.Children.Add(GameOverText);
+            OverlayShown = true;   
+        }
+
+        private void ShowPause()
+        {
+            if (OverlayShown) RemoveOverlays();
+            GameCanvas.Children.Add(OverlayRect);
+            GameCanvas.Children.Add(PauseText);
+            OverlayShown = true;
+        }
+
+        private void RemoveOverlays()
+        {
+            GameCanvas.Children.Remove(OverlayRect);
+            GameCanvas.Children.Remove(PauseText);
+            GameCanvas.Children.Remove(GameOverText);
+            OverlayShown = false;
+        }
+
+        private void PauseGame()
+        {
+            paused = true;
+            Timer.Stop();
+            ShowPause();
+            pause_btn.IsEnabled = false;
+            start_btn.IsEnabled = true;
+        }
+
+        private void ResumeGame()
+        {
+            paused = false;
+            Timer.Start();
+            GameCanvas.Focus();
+            RemoveOverlays();
+            pause_btn.IsEnabled = true;
+            start_btn.IsEnabled = false;
+        }
+
+        private void SetGameOver()
+        {
+            Timer.Stop();
+            ShowGameOver();
+            start_btn.IsEnabled = false;
+            pause_btn.IsEnabled = false;
+        }
+
+        private void UpdateGameSpeed()
+        {
+            Timer.Stop();
+            int newtime = 500;
+            for (int i = game.Level; i > 1; i--) newtime -= (int)(newtime * .25);
+            Console.WriteLine(newtime);
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, newtime);
+            Timer.Start();
+        }
+
+        private void InitializeKeyBindings()
         {
             rPlay = new RoutedCommand();
             rPlay.InputGestures.Add(new KeyGesture(Key.G, ModifierKeys.Control));
@@ -95,19 +186,7 @@ namespace Tetris
             } 
             else
             {
-                Timer.Stop();
-                gameover.Text = "Game Over";
-                gameover.FontSize = 30;
-                gameover.Foreground = Brushes.White;
-                gameover.Margin = new Thickness(78, 250, 0, 0);
-                overlay.Height = 540;
-                overlay.Width = 300;
-                Brush test = new SolidColorBrush(Color.FromArgb(200, 11, 11, 11));
-                overlay.Fill = test;
-                GameCanvas.Children.Add(overlay);
-                GameCanvas.Children.Add(gameover);
-                start_btn.IsEnabled = false;
-                pause_btn.IsEnabled = false;
+                SetGameOver();
             }
         }
 
@@ -121,12 +200,7 @@ namespace Tetris
 
             if (previouslevel != game.Level)
             {
-                Timer.Stop();
-                int newtime = 500;
-                for (int i = game.Level; i > 1; i--) newtime -= (int)(newtime * .25);
-                Console.WriteLine(newtime);
-                Timer.Interval = new TimeSpan(0, 0, 0, 0, newtime);
-                Timer.Start();
+                UpdateGameSpeed();
             }
         }
 
@@ -160,13 +234,8 @@ namespace Tetris
             if(e.Key == Key.Home)
             {
                 game.cheatcode();
-                Timer.Stop();
 
-                int newtime = 500;
-                for (int i = game.Level; i > 1; i--) newtime -= (int)(newtime * .25);
-                Console.WriteLine(newtime);
-                Timer.Interval = new TimeSpan(0, 0, 0, 0, newtime);
-                Timer.Start();
+                UpdateGameSpeed();
                 
                 // update display
                 this.score_txt.Text = game.Score.ToString();
@@ -200,7 +269,8 @@ namespace Tetris
 
         private void load_btn_Click(object sender, RoutedEventArgs e)
         {
-            pause_btn_Click(null, null);
+            PauseGame();
+
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Filter = "Tetris Save File|*.tet";
             Nullable<bool> result = dialog.ShowDialog();
@@ -217,24 +287,16 @@ namespace Tetris
                 // update display
                 this.score_txt.Text = game.Score.ToString();
                 this.level_txt.Text = game.Level.ToString();
-                GameCanvas.Children.Remove(gameover);
-                GameCanvas.Children.Remove(overlay);
-                paused = false;
-                GameOver = false;
-                pause_btn_Click(null, null);
+
+                UpdateGameSpeed();
+                PauseGame();
             }
         }
 
         private void start_btn_Click(object sender, RoutedEventArgs e)
         {
             if (paused && !GameOver) {
-                paused = false;
-                Timer.Start();
-                GameCanvas.Focus();
-                GameCanvas.Children.Remove(overlay);
-                GameCanvas.Children.Remove(pause);
-                pause_btn.IsEnabled = true;
-                start_btn.IsEnabled = false;
+                ResumeGame();
             }
         }
 
@@ -242,39 +304,22 @@ namespace Tetris
         {
             if (!paused && !GameOver)
             {
-                paused = true;
-                pause.Text = "Paused";
-                pause.FontSize = 30;
-                pause.Foreground = Brushes.White;
-                pause.Margin = new Thickness(103, 250, 0, 0);
-                Timer.Stop();
-                overlay.Height = 540;
-                overlay.Width = 300;
-                Brush test = new SolidColorBrush(Color.FromArgb(200, 11, 11, 11));
-                overlay.Fill = test;
-                GameCanvas.Children.Add(overlay);
-                GameCanvas.Children.Add(pause);
-                pause_btn.IsEnabled = false;
-                start_btn.IsEnabled = true;
+                PauseGame();
             }
         }
 
         private void startnewgame_click(object sender, RoutedEventArgs e)
         {
             Timer.Stop();
-            Timer.Interval = new TimeSpan(0, 0, 0, 0, 500);
             game.clearCanvas();
-            GameCanvas.Children.Remove(overlay);
-            GameCanvas.Children.Remove(gameover);
-            GameCanvas.Children.Remove(pause);
+            RemoveOverlays();
             game = new TetrisGameManager(0, 1, ref GameCanvas);
-            pause_btn.IsEnabled = false;
-            start_btn.IsEnabled = true;
             this.score_txt.Text = game.Score.ToString();
             this.level_txt.Text = game.Level.ToString();
             this.lvl_txt.Text = game.TotalLines.ToString();
+            UpdateGameSpeed();
+            PauseGame();
             GameOver = false;
-            paused = true;
         }
 
         private void quit_click(object sender, RoutedEventArgs e)

@@ -48,6 +48,7 @@ namespace Tetris.GameState
 
         public void loadState(SaveState bundle)
         {
+            this.gameHasStarted = true;
             this.Score = bundle.saveScore;
             this.Level = bundle.saveLevel;
             this.TotalLines = bundle.saveLineCount;
