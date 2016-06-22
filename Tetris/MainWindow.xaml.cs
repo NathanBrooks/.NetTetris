@@ -280,16 +280,21 @@ namespace Tetris
 
                 IFormatter Load = new BinaryFormatter();
                 Stream Read = new FileStream(loadfile, FileMode.Open, FileAccess.Read);
-                SaveState loadBundle = (SaveState)Load.Deserialize(Read);
+                try
+                {
+                    SaveState loadBundle = (SaveState)Load.Deserialize(Read);
+                    game.loadState(loadBundle);
+                    // update display
+                    this.score_txt.Text = game.Score.ToString();
+                    this.level_txt.Text = game.Level.ToString();
+
+                    UpdateGameSpeed();
+                    PauseGame();
+                } catch (Exception exception)
+                {
+                    MessageBox.Show("That .tet file is corrupt or not valid, please load a different file!", "Invalid!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
                 Read.Close();
-
-                game.loadState(loadBundle);
-                // update display
-                this.score_txt.Text = game.Score.ToString();
-                this.level_txt.Text = game.Level.ToString();
-
-                UpdateGameSpeed();
-                PauseGame();
             }
         }
 
